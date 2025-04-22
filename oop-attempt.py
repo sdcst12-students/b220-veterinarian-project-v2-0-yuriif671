@@ -216,7 +216,7 @@ def main():
     db = Database("veterinarian.db")
     db.create_tables()
 
-    action = input("What do you want to do? Add customer, search customer, or edit customer? (add/search/edit): ")
+    action = input("What do you want to do? Add customer, search customer, or edit customer? (add/search/edit): ") 
 
     if action == "add":
         fname = input("Enter first name: ")
@@ -239,7 +239,6 @@ def main():
 
     else:
         print("Invalid choice. Please choose 'add', 'search', or 'edit'")
-
 
 if __name__ == "__main__":
     main()

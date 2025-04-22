@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
+import re
 
 def init_db():
     conn = sqlite3.connect("veterinarian.db")
@@ -61,6 +62,22 @@ def add_customer_window():
         conn = sqlite3.connect("veterinarian.db")
         cursor = conn.cursor()
 
+        if '' in [fname, lname, phone, email, address, city, postalcode]:
+            messagebox.showerror("Empty", "Missing some values")
+            conn.close()
+            return
+        
+       
+        if re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email) == None:
+            messagebox.showerror("Bad Email", "You are stupid")
+            conn.close()
+            return
+        
+        if re.match(r'^\d{10,15}$', phone) == None:
+            messagebox.showerror("Bad Phone", "You are stupid")
+            conn.close()
+            return
+        
         cursor.execute("SELECT id FROM customers WHERE phone = ? OR email = ?", (phone, email))
         if cursor.fetchone():
             messagebox.showerror("Duplicate", "Phone number or email already exists.")

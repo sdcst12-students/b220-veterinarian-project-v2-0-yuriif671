@@ -100,7 +100,6 @@ class Customer:
         conn.close()
         print("Customer added successfully.")
 
-    @staticmethod
     def search(db, search_term):
         conn = db.connect()
         cursor = conn.cursor()
@@ -110,19 +109,20 @@ class Customer:
             WHERE fname = ? OR lname = ? OR phone = ? OR email = ? OR city = ? OR address = ? OR postalcode = ?
         ''', (search_term,) * 7)
 
-        results = cursor.fetchone()
+        results = cursor.fetchall()
 
         if results:
-            print(f"""
-    ID         : {results[0]}
-    First Name : {results[1]}
-    Last Name  : {results[2]}
-    Phone Num  : {results[3]}
-    Email      : {results[4]}
-    Address    : {results[5]}
-    City       : {results[6]}
-    Postal Code: {results[7]}
-            """)
+            for result in results: 
+                print(f"""
+    ID         : {result[0]}
+    First Name : {result[1]}
+    Last Name  : {result[2]}
+    Phone Num  : {result[3]}
+    Email      : {result[4]}
+    Address    : {result[5]}
+    City       : {result[6]}
+    Postal Code: {result[7]}
+                """)
         else:
             print("No matches found")
 
